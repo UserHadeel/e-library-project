@@ -1,0 +1,48 @@
+.container {
+    width: 70%;
+    margin-left: 7%;
+    padding: 20px;
+    float: left;
+    background: #fff;
+    border-radius: 30px;
+    margin-top: 5%;
+}
+
+table{
+    width: 60%;
+}
+table,th{
+    padding: 1rem;
+    border-collapse: collapse;
+    text-align: left;
+    border: 1px solid #ddd;
+
+}
+thead tr:hover{
+    background-color: rgba(226, 222, 222, 0.733);
+}
+
+#nav-toggle:checked ~ main .container{
+    margin-left: 70px;
+     width: calc(100% - 70px);
+}
+
+
+.Title
+{
+    color: #2f9765;
+    font-family:'Times New Roman', Times, serif;
+    font-size: 30px;
+    padding: 45px;
+    padding-bottom: 0px;
+}
+
+thead tr th {
+    text-align: center;
+    align-items: center;
+    }
+
+.table_title{
+
+        padding: .8rem 1rem;
+    }

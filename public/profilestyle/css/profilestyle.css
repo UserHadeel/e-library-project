@@ -1,0 +1,20 @@
+   /* تعديل عرض النماذج */
+   .main-content ~ form {
+    margin-left: 355px;
+    width: 1000px;
+    padding-right: 30px;
+    height: 200px;
+}
+
+.max-w-xl {
+    max-width: 100%;
+}
+.sidebar-brand span,
+ header h2 {
+    font-size: 20px;
+    font-weight: bold
+}
+
+.x-primary-button {
+    background: #44ca89
+}
