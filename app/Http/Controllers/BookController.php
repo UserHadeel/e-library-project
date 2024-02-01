@@ -1,5 +1,7 @@
 <?php
 
+
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreBookRequest;
@@ -7,8 +9,6 @@ use App\Http\Requests\UpdateBookRequest;
 use App\Models\Book;
 
 use App\Models\Category;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -33,6 +33,7 @@ class BookController extends Controller
         $books = Book::all();
         return view("book.index", ['books' => $books, 'categories' => Category::all()]);
     }
+
 
 
     public function create(Request $request)
@@ -206,16 +207,26 @@ public function search(Request $request)
     $query = Book::query();
 
 
+    // if ($request->has('query')) {
+    //     $queryValue = $request->input('query');
+    //     $query->where(function ($q) use ($queryValue) {
+    //         $q->where('title', 'like', "%$queryValue%")
+    //             ->orWhere('cat_name', 'like', "%$queryValue%")
+    //             ->orWhere('serial_number', 'like', "%$queryValue%")
+    //             ->orWhere('author', 'like', "%$queryValue%")
+    //             ->orWhere('publisher', 'like', "%$queryValue%")
+    //             ->orWhere('available_quantity', 'like', "%$queryValue%");
+    //     });
+    // }
+    
     if ($request->has('query')) {
         $queryValue = $request->input('query');
-        $query->where(function ($q) use ($queryValue) {
-            $q->where('title', 'like', "%$queryValue%")
-                ->orWhere('cat_name', 'like', "%$queryValue%")
-                ->orWhere('serial_number', 'like', "%$queryValue%")
-                ->orWhere('author', 'like', "%$queryValue%")
-                ->orWhere('publisher', 'like', "%$queryValue%")
-                ->orWhere('available_quantity', 'like', "%$queryValue%");
-        });
+        $query->where('title', 'like', "%$queryValue%")
+            ->orWhere('cat_name', 'like', "%$queryValue%")
+            ->orWhere('serial_number', 'like', "%$queryValue%")
+            ->orWhere('author', 'like', "%$queryValue%")
+            ->orWhere('publisher', 'like', "%$queryValue%")
+            ->orWhere('available_quantity', 'like', "%$queryValue%");
     }
 
     $books = $query->get();
