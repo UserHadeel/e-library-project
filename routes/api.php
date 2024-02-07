@@ -6,7 +6,8 @@ use App\Http\Controllers\Api\Authentication;
 use App\Http\Controllers\Api\A_BookController;
 use App\Http\Controllers\Api\A_GraduationProjectsController;
 use App\Http\Controllers\Api\A_ScientificJournalsController;
-use App\Http\Controllers\Api\A_UserLoanController;
+use App\Http\Controllers\Api\A_BookLoanController;
+use App\Http\Controllers\Api\A_ProjectLoanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,4 +45,9 @@ Route::post('/Journals/search', [A_ScientificJournalsController::class,'searchJo
 
 
 //loan api routs
-Route::get('/loans/{user_id}', [A_UserLoanController::class,'getUserLoans']);
+Route::get('/loansbook/{user_id}', [A_BookLoanController::class,'getBookLoans']);
+Route::post('/book-loans', [A_BookLoanController::class, 'storeBookLoan']);
+
+Route::get('/loansproject/{user_id}', [A_ProjectLoanController::class,'getProjectLoans']);
+Route::post('/project-loans', [A_ProjectLoanController::class, 'storeProjectLoan']);
+
