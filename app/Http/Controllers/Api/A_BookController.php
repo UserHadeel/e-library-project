@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller as Controller;
 use App\Http\Controllers\Api\BaseController as BaseController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Book;
 use App\Models\Loan;
 
@@ -52,4 +53,34 @@ class A_BookController extends BaseController {
 
         return $this->sendResponse($books, 'Search results');
     }
+
+//     public function getImage($id)
+// {
+//     $book = Book::findOrFail($id);
+//     $imagePath = $book->image;
+
+//     if ($imagePath) {
+//         $file = Storage::disk('public')->get('images/book_cover/' . $imagePath);
+//         return response($file, 200, ['Content-Type' => 'image/jpeg']);
+//     }
+
+//     return response()->json(['error' => 'Image not found'], 404);
+// }
+    public function downloadPdf($id)
+    {
+        $book = Book::find($id);
+
+        if (!$book) {
+           return $this->sendError('هذا الكتاب غير موجود');
+        }
+
+        $filePath = public_path('public/files/book_file/' . $book->resource);
+
+        if (!file_exists($filePath)){
+           return $this->sendError('ملف هذا الكتاب غير متوفر');
+        }
+           return $this->sendResponse($filePath, 'download');
+
+}
+
 }

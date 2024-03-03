@@ -2,7 +2,6 @@
 namespace App\Http\Controllers;
 use App\Models\department;
 use App\Models\projectLoan;
-use Illuminate\Http\Request;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\LoanController;
 use App\Http\Controllers\CategoryController;
@@ -21,11 +20,7 @@ use App\Models\ScientificJournals;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\GraduationProjects;
-use Illuminate\Support\Facades\Redirect;
-use App\Mail\Verified;
 
 //////////////////////////
 // TEST PURPOSES ONLY :)
@@ -159,7 +154,7 @@ Route::get('/newbooks', function () {
         'books' => Book::all(),
         'department' => department::all(),
         'lastNewBooks'=>Book::latest()->take(10)->get(['id','title','cat_name','author','image','available_quantity','resource', 'able_to_borrow', 'able_to_download'])]);
-})->middleware(['auth', 'verified'])->name('newbooks');
+})->middleware(['auth'])->name('newbooks');
 
 Route::get('/mostborrowed', function () {
     $result = Loan::selectRaw('book.title as TITLE, loans.book_id as ID, book.author as author, book.image as imagee, book.available_quantity as available_quantity, book.resource as resourcee, count(*) as LCOUNT')
@@ -212,7 +207,7 @@ Route::get('/dashboard', function () {
     'scientificJournals'=>ScientificJournals::all(),'countscientificJournals'=>ScientificJournals::count(),
     'lastJournals'=>ScientificJournals::latest()->take(4)->get(['id','title','publishing','Year_of_publication']),
 ]);
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
 
 
@@ -269,15 +264,15 @@ Route::middleware('auth')->group(function () {
 
 
 
-Route::get('/test', function() {
+// Route::get('/test', function() {
 
-    $loans = Loan::where('is_returned', false)
-        ->whereDate('return_date', '>=', Carbon::now()->addDay())->get();
+//     $loans = Loan::where('is_returned', false)
+//         ->whereDate('return_date', '>=', Carbon::now()->addDay())->get();
 
-        foreach($loans as $loan) {
-            $user = $loan->user;
-            Mail::to($user->email)->send(new LoanMail($user));
-        }
-});
+//         foreach($loans as $loan) {
+//             $user = $loan->user;
+//             Mail::to($user->email)->send(new LoanMail($user));
+//         }
+// });
 
 require __DIR__.'/auth.php';
