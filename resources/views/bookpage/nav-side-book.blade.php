@@ -14,7 +14,9 @@
 
 
 <style>.dropdown [type="checkbox"] {
-    display: none; }
+    display: none;
+    
+    }
 </style>
 <script>
     var section = sessionStorage.getItem('section') ?? "book";
@@ -90,7 +92,7 @@
         <span class="icon-button__badge" >{{Auth::User()->unreadNotifications->count()}}</span>
         </i>
     </label>
-<div class="dropdownn-menu">
+  <div class="dropdownn-menu">
     <div class="dropdown-header">
     <span>Notifications</span>
     </div>

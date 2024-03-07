@@ -68,7 +68,7 @@
                                 <td> اسم المستعير</td>
                                 <td> البريد الالكتروني</td>
                                 <td> تاريخ الارجاع</td>
-                                <td>العملية</td>
+                                {{-- <td>العملية</td> --}}
                             </tr>
                             </thead>
                             <tbody>
@@ -104,9 +104,9 @@
                                     <td>
                                         {{Carbon::parse($loan->return_date)->format('l jS F, Y')}}
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                         <a href="{{ route('userloans.terminate', ['loan' => $loan->id]) }}">ارجاع الكتاب</a>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                             @endforeach
                             </tbody>
@@ -141,7 +141,7 @@
                                 <td> اسم المستعير</td>
                                 <td> البريد الالكتروني</td>
                                 <td> تاريخ الارجاع</td>
-                                <td>العملية</td>
+                                {{-- <td>العملية</td> --}}
                             </tr>
                             </thead>
                             <tbody>
@@ -177,9 +177,9 @@
                                     <td>
                                         {{Carbon::parse($projectLoan->return_date)->format('l jS F, Y')}}
                                     </td>
-                                    <td>
+                                    {{-- <td>
                                     <a href="{{ route('projectuserloans.terminate', ['projectLoan' => $projectLoan->id]) }}">ارجاع المشروع</a>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                             @endforeach
                             </tbody>

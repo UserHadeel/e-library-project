@@ -16,12 +16,26 @@ class A_UserProfileController extends BaseController
         return $this->sendResponse($user,'Return user ');
 
     }
-    public function getUser($id)
+    public function getUser($user_id)
     {
-        $user = User::where('id','=',$id)->get();
+        $user = User::where('id','=',$user_id)->get();
         return $this->sendResponse($user,'Return user ');
 
     }
+
+    public function getUserDetails(Request $request): JsonResponse
+{
+    // $user = $request->user();
+    $user = Auth::user();
+
+    $userDetails = [
+        'name' => $user->name,
+        'email' => $user->email,
+        'password' => $user->password,
+    ];
+
+    return response()->json($userDetails);
+}
 
 
 
@@ -36,46 +50,46 @@ class A_UserProfileController extends BaseController
         ]);
     }
 
-    // public function update(Request $request, $user_id)
-    // {
-    //     $user = User::findOrFail($user_id);
-
-    //     $user->name = $request->input('name');
-    //     $user->email = $request->input('email');
-    //     $user->password = bcrypt($request->input('password'));
-    //     // يجب استخدام دالة bcrypt لتشفير كلمة المرور
-
-    //     $user->save();
-
-    //     return $this->sendResponse($user,'Return user ');
-
-    // }
-
     public function update(Request $request, $user_id)
     {
         $user = User::findOrFail($user_id);
 
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'current_password' => 'required',
-            'password' => 'required|min:8',
-        ]);
+        $user->name = $request->input('name');
+        // $user->email = $request->input('email');
+        $user->password = bcrypt($request->input('password'));
+        // يجب استخدام دالة bcrypt لتشفير كلمة المرور
 
-        // التحقق من صحة كلمة المرور الحالية
-        if ($validatedData['current_password'] == $user->password) {
-            // تحديث البيانات فقط إذا كانت كلمة المرور صحيحة
+        $user->save();
 
-            $user->name = $validatedData['name'];
-            $user->email = $validatedData['email'];
-            $user->password = $validatedData['password'];
+        return $this->sendResponse($user,'Return user ');
 
-            $user->save();
-
-            return $this->sendResponse($user, 'تم تحديث البيانات بنجاح');
-        } else {
-            return $this->sendError('كلمة المرور الحالية غير صحيحة');
-        }
     }
+
+    // public function update(Request $request, $user_id)
+    // {
+    //     $user = User::findOrFail($user_id);
+
+    //     $validatedData = $request->validate([
+    //         'name' => 'required',
+    //         'email' => 'required|email',
+    //         'current_password' => 'required',
+    //         'password' => 'required|min:8',
+    //     ]);
+
+    //     // التحقق من صحة كلمة المرور الحالية
+    //     if ($validatedData['current_password'] == $user->password) {
+    //         // تحديث البيانات فقط إذا كانت كلمة المرور صحيحة
+
+    //         $user->name = $validatedData['name'];
+    //         $user->email = $validatedData['email'];
+    //         $user->password = $validatedData['password'];
+
+    //         $user->save();
+
+    //         return $this->sendResponse($user, 'تم تحديث البيانات بنجاح');
+    //     } else {
+    //         return $this->sendError('كلمة المرور الحالية غير صحيحة');
+    //     }
+    // }
 
 }

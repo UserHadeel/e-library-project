@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+
 use App\Models\Loan;
 use App\Models\User;
 use App\Models\Book;
@@ -18,43 +19,61 @@ use App\Http\Controllers\Api\BaseController as BaseController;
 
 class A_ProjectLoanController  extends BaseController
 {
-  public function getProjectLoans($user_id)
- {
-   $loans = projectLoan::where('user_id','=',$user_id)->get();
+    public function getProjectLoans($user_id)
+    {
+        $loans = projectLoan::where('user_id', '=', $user_id)
+            ->with('graduation_projects')
+            ->where('is_returned', '=', 0)
+            ->get();
 
-   return $this->sendResponse($loans,'Return project loans');
+        $projectLoans = [];
+        foreach ($loans as $loan) {
+            $projectLoans[] = [
+                'project_name' => $loan->graduation_projects->title,
+                'return_date' => $loan->return_date, // استرداد حقل returnDate
+            ];
+        }
 
- }
+        return $this->sendResponse($projectLoans, 'Return book loans');
+    }
 
- public function storeProjectLoan(Request $request)
- {
-     // التحقق من صحة البيانات
-     $validatedData = $request->validate([
-         'graduation_projects_id' => 'required',
-         'user_id' => 'required',
-         'first_name' => 'required',
-         'last_name' => 'required',
-         'email' => 'required|email',
-         'phone' => 'required',
-         'return_date' => 'required|date',
-         'number_borrowed' => 'required|integer',
-     ]);
+    //   public function getProjectLoans($user_id)
+    //  {
+    //    $loans = projectLoan::where('user_id','=',$user_id)->get();
 
-     // حفظ البيانات في قاعدة البيانات
-     $loan = new projectLoan();
-     $loan->graduation_projects_id = $validatedData['graduation_projects_id'];
-     $loan->user_id = $validatedData['user_id'];
-     $loan->first_name = $validatedData['first_name'];
-     $loan->last_name = $validatedData['last_name'];
-     $loan->email = $validatedData['email'];
-     $loan->phone = $validatedData['phone'];
-     $loan->return_date = $validatedData['return_date'];
-     $loan->number_borrowed = $validatedData['number_borrowed'];
-     $loan->save();
+    //    return $this->sendResponse($loans,'Return project loans');
+
+    //  }
+
+    public function storeProjectLoan(Request $request)
+    {
+        // التحقق من صحة البيانات
+        $validatedData = $request->validate([
+            'graduation_projects_id' => 'required',
+            'user_id' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required',
+            'return_date' => 'required|date',
+            'number_borrowed' => 'required|integer',
+        ]);
+
+        // حفظ البيانات في قاعدة البيانات
+        $loan = new projectLoan();
+        $loan->graduation_projects_id = $validatedData['graduation_projects_id'];
+        $loan->user_id = $validatedData['user_id'];
+        $loan->first_name = $validatedData['first_name'];
+        $loan->last_name = $validatedData['last_name'];
+        $loan->email = $validatedData['email'];
+        $loan->phone = $validatedData['phone'];
+        $loan->return_date = $validatedData['return_date'];
+        $loan->number_borrowed = $validatedData['number_borrowed'];
+        $loan->save();
 
 
-     return $this->sendResponse($loan,'saved Book loans');
- }
+        return $this->sendResponse($loan, 'saved Book loans');
+    }
 }
 // (Book $book, Request $request): JsonResponse
 // {

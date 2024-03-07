@@ -5,13 +5,14 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" />
 <style>.dropdown [type="checkbox"] {
     display: none; }
+
 </style>
 <div class="main-content">
     <header>
     <div class="icons" style="margin-bottom: 20px">
-     @can('قائمة-الصلاحيات')
+     {{-- @can('قائمة-الصلاحيات')
     <a  href="{{route('dashboard')}}"><span class="fas fa-tachometer-alt"></span><span >لوحة التحكم</span></a>
-    @endcan
+    @endcan --}}
 
     <a  href="{{route('homepage')}}"><span class="fas fa-home"></span><span >الرئسية</span></a>
 
@@ -22,7 +23,7 @@
                 <button type="submit" class="search-button">
                     <span class="las la-search"></span>
                 </button>
-                <input type="text" name="query" placeholder=" ادخل عنوان الكتاب أو القسم او المؤلف">
+                <input type="text" name="query" placeholder="البحث">
         </div>
     </form>
     <div class="user-wrapper">
@@ -47,7 +48,7 @@
 
 
 
-       <div class="sidebar-one" >
+       {{-- <div class="sidebar-one" >
        <div class="sidebar-menu-one">
             <li>
                 <a href="{{route('scientificJournalsPage')}}" >
@@ -114,7 +115,75 @@
             @endforeach
 
         </ul>
-    </div>
+    </div> --}}
+{{-- </div> --}}
+<div class="sidebar-one" >
+    <div class="sidebar-menu-one">
+        <li>
+            <a href="{{route('scientificJournalsPage')}}" >
+            <span class="fa fa-book"></span>
+            <span class="sidebar-title" style="margin-right: 1px;"> المجلات العلمية</span>
+        </a>
+        </li>
 </div>
+</div>
+
+<div class="sidebar" >
+<div class="sidebar-menu">
+    <ul>
+        <li>
+            <a class="active" style="cursor: pointer;" onclick="setSection('book');"> <span class="fas fa-tasks" ></span><span class="sidebar-title">أقسام الكتب</span></a>
+        </li>
+        <li>
+            <a href="{{route('m-homepage', ['i' => 'book', 'cg' => 'all'])}}">
+            <span class="las la-book"></span>
+            <span>الكل</span>
+            </a>
+        </li>
+        @foreach ($categories as $category)
+        <li>
+            <!-- <a href="{{ route('category.index') }}"> -->
+            <a href="{{route('m-homepage', ['i' => 'book', 'cg' => $category->name])}}">
+            <span class="las la-book"></span>
+            <span>{{ $category->name }}</span>
+            </a>
+        </li>
+        @endforeach
+    </ul>
+</div>
+</div>
+<div class="sidebar-tow" >
+<div class="sidebar-menu-tow">
+    <ul>
+
+        <li>
+            <a class="active"  style="cursor: pointer;" onclick="setSection('gb');">
+            <span class="fa-solid fa-graduation-cap"></span>
+            <span class="sidebar-title" style="margin-right: 1px;">مشاريع التخرج</span>
+            </a>
+        </li>
+        <li>
+            <a href="{{route('m-homepage', ['i' => 'gp', 'cg' => 'all'])}}">
+            <span class="las la-book"></span>
+            <span>الكل</span>
+            </a>
+        </li>
+        @foreach ($department as $department)
+        <li>
+            <a href="{{route('m-homepage', ['i' => 'gp', 'cg' => $department->name])}}">
+            <span class="las la-book"></span>
+            <span>{{ $department->name }}</span>
+            </a>
+        </li>
+        @endforeach
+
+    </ul>
+</div>
+</div>
+
+<script>
+let hiddenInput = document.querySelector('input[name="type"]');
+hiddenInput.value = section;
+</script>
 </body>
 </html>

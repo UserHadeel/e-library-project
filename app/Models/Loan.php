@@ -31,6 +31,10 @@ class Loan extends Model
         return $this->belongsTo(Book::class);
     }
 
+//     public function project()
+// {
+//     return $this->belongsTo(GraduationProjects::class);
+// }
 
     public function terminate() {
         $this->is_returned = true;

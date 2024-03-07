@@ -67,9 +67,11 @@ Route::post('/project-loans', [A_ProjectLoanController::class, 'storeProjectLoan
 
 
 Route::get('/profile', [A_UserProfileController::class, 'index']);
-Route::get('/profile/{id}', [A_UserProfileController::class, 'getUser']);
+Route::get('/profile/{user_id}', [A_UserProfileController::class, 'getUser']);
 
 // Route::get('/profile $user => id', [A_UserProfileController::class, 'index']);
+Route::get('/profile/get', 'A_UserProfileController@getUserDetails');
+
 
 Route::get('/profile/edit', 'A_UserProfileController@edit');
 Route::put('/profile/update/{user_id}', [A_UserProfileController::class, 'update']);

@@ -7,6 +7,7 @@
     list-style-type: none;
     text-decoration: none;
     font-family:'Popping', sans-serif;
+
 }
 
 .sidebar{
@@ -153,7 +154,7 @@ padding-right: 15px;
 
  .icons span{
         color:  #686b6a;
-        margin-top: 38px;
+        margin-top: 30px;
         padding: 3px;
         font-size: 20px;
 }
@@ -466,15 +467,19 @@ header label span {
 
  @media only screen and (max-width:1200px) {
     .sidebar {
-        width: 70px;
+        width: 110px;
+        margin-top: -5px;
+
     }
     .sidebar-tow {
-        width: 70px;
+        width: 110px;
+        margin-top: -10px;
+
     }
     .sidebar-one {
-        width: 70px;
-    }
+        width: 110px;
 
+    }
     .sidebar .sidebar-brand,
     .sidebar li {
         padding-left: 1rem;
@@ -487,7 +492,7 @@ header label span {
     }
     .sidebar-one li {
         padding-left: 1rem;
-        text-align: center;
+        text-align: right;
     }
 
     .sidebar li a {
@@ -514,34 +519,34 @@ header label span {
 
 
     .sidebar:hover {
-        width: 345px;
+        width: 250px;
         z-index: 200;
     }
     .sidebar-tow:hover {
-        width: 345px;
+        width: 250px;
         z-index: 200;
     }
     .sidebar-one:hover {
-        width: 345px;
+        width: 250px;
         z-index: 200;
     }
 
-    .sidebar:hover .sidebar-brand,
+
     .sidebar:hover li {
         padding-left: 2rem;
-        text-align: left;
+        text-align: right;
         transition: right 600ms;
     }
-    .sidebar-tow
+
     .sidebar-tow:hover li {
         padding-left: 2rem;
-        text-align: left;
+        text-align: right;
         transition: right 600ms;
     }
-    .sidebar-one
+
     .sidebar-one:hover li {
         padding-left: 2rem;
-        text-align: left;
+        text-align: right;
         transition: right 600ms;
     }
 
@@ -562,7 +567,40 @@ header label span {
     .sidebar:hover li a span:last-child {
         display: inline;
         transition: right 600ms;
-    }}
+    }
+
+    .sidebar-one:hover li a span:last-child {
+        display: inline;
+        transition: right 600ms;
+    }
+
+    .sidebar-tow:hover li a span:last-child {
+        display: inline;
+        transition: right 600ms;
+    }
+
+    .icons span{
+    margin-top: 15px;
+}
+}
+
+@media only screen and (max-width:768px) {
+
+
+    .search-wrapper {
+      width: 250px;
+      height: 50px;
+      float: right;
+      margin-right: 150px;
+    }
+    .icons span{
+        margin-top: 15px;
+    }
+
+}
+
+
+
 
 /* scrollbar*/
 
