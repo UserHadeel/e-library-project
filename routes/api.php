@@ -75,4 +75,8 @@ Route::get('/profile/get', 'A_UserProfileController@getUserDetails');
 
 Route::get('/profile/edit', 'A_UserProfileController@edit');
 Route::put('/profile/update/{user_id}', [A_UserProfileController::class, 'update']);
-Route::delete('/profile/destroy', 'A_UserProfileController@destroy');
+
+
+Route::post('/profile/disable', [A_UserProfileController::class, 'disable']);
+
+

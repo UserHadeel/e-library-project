@@ -7,6 +7,7 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class A_UserProfileController extends BaseController
 {
@@ -56,7 +57,10 @@ class A_UserProfileController extends BaseController
 
         $user->name = $request->input('name');
         // $user->email = $request->input('email');
-        $user->password = bcrypt($request->input('password'));
+        if(!empty($request->input('password'))){
+            $user->password = bcrypt($request->input('password'));
+        }
+        
         // يجب استخدام دالة bcrypt لتشفير كلمة المرور
 
         $user->save();
@@ -65,6 +69,33 @@ class A_UserProfileController extends BaseController
 
     }
 
+
+    public function disable(Request $request){
+
+        $validatedData = $request->validate([
+            'id' => 'required',
+            'password' => 'required',
+        ]);
+    
+
+  
+       $user = User::find($validatedData['id']);
+      
+        if ($user) {
+    
+           
+           // التحقق من صحة كلمة المرور
+            if(Hash::check($validatedData['password'],$user->password)){
+                $user->active = 0;
+                $user->save();
+                return $this->sendResponse($user, 'تم حذف المستخدم بنجاح');
+             }else{
+                return $this->sendError('كلمة المرور غير صحيحة');
+             }
+        } else {
+            return $this->sendError('لم يتم العثور على المستخدم');
+        }
+    }
     // public function update(Request $request, $user_id)
     // {
     //     $user = User::findOrFail($user_id);
